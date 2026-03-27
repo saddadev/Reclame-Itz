@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reclame Itz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<link rel="manifest" href="manifest.json">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<meta name="theme-color" content="#0B3D91">
+
+<body>
+
+    <section id="loginScreen" class="full-screen">
+        <div class="login-container">
+            <div class="logo-large">
+                <span class="logo-dot"></span>
+                <h1>Reclame <span>Itz</span></h1>
+                <p>Imperatriz em suas mãos</p>
+            </div>
+            
+            <div class="login-methods">
+                <button class="btn-google" onclick="handleLogin()">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" width="20">
+                    Entrar com Google
+                </button>
+                <div class="divider"><span>ou e-mail</span></div>
+                <input type="email" placeholder="Seu e-mail">
+                <input type="password" placeholder="Sua senha">
+                <button class="btn-primary" onclick="handleLogin()">Entrar</button>
+                <p class="signup-text">Não tem conta? <span>Cadastre-se</span></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="appScreen" style="display: none;">
+        <header class="main-header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-dot"></span>
+                    <h1>Reclame <span>Itz</span></h1>
+                </div>
+                <div class="user-avatar" onclick="logout()">
+                    <img src="https://ui-avatars.com/api/?name=User&background=FFB703&color=fff" alt="Perfil">
+                </div>
+            </div>
+        </header>
+
+        <main class="app-container">
+            <div class="feed-header">
+                <h2>Feed da Cidade</h2>
+                <span>Imperatriz - MA</span>
+            </div>
+
+            <section id="complaintsList" class="complaints-list">
+                </section>
+        </main>
+
+        <button class="fab" id="openModal"><i class='bx bx-plus'></i></button>
+    </section>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Relatar Problema</h2>
+                <button class="close-modal" id="closeModal"><i class='bx bx-x'></i></button>
+            </div>
+            <form id="complaintForm" class="modern-form">
+                <input type="text" id="title" placeholder="Título do problema" required>
+                <div class="row">
+                    <select id="category" required>
+                        <option value="Infraestrutura">Infraestrutura</option>
+                        <option value="Saúde">Saúde</option>
+                        <option value="Limpeza">Limpeza</option>
+                    </select>
+                    <input type="text" id="neighborhood" placeholder="Bairro" required>
+                </div>
+                <textarea id="description" placeholder="Detalhes..."></textarea>
+                
+                <div class="upload-area" onclick="document.getElementById('photo').click()">
+                    <i class='bx bx-camera'></i>
+                    <p id="photoLabel">Tirar ou anexar foto</p>
+                    <input type="file" id="photo" accept="image/*" hidden onchange="previewImage(this)">
+                </div>
+
+                <div class="location-btn" id="getLocation">
+                    <i class='bx bx-target-lock'></i> <span id="locTxt">Usar minha localização</span>
+                </div>
+
+                <button type="submit" class="btn-submit">Publicar no Feed</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
