@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reclame Itz</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <section id="loginScreen" style="display: flex; width: 100%; height: 100vh; justify-content: center; align-items: center; background: #f4f7f6; position: fixed; top:0; left:0; z-index:999;">
+        <div class="login-container" style="width: 90%; max-width: 380px; text-align: center; background: white; padding: 40px 30px; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);">
+            <div class="logo-large">
+                <div class="logo-dot" style="background:#FFB703; width:15px; height:15px; border-radius:50%; margin: 0 auto 10px;"></div>
+                <h1 style="color:#0B3D91; font-weight:800; font-size: 2.2rem;">Reclame <span style="color:#FFB703;">Itz</span></h1>
+                <p style="color:#666; margin-bottom: 30px;">Melhorando Imperatriz juntos</p>
+            </div>
+            
+            <div class="login-methods" style="display: flex; flex-direction: column; gap: 12px;">
+                <button onclick="loginGoogle()" style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border: 1px solid #ddd; border-radius: 12px; background: white; font-weight: 600; cursor: pointer; width: 100%;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" width="18">
+                    Entrar com Google
+                </button>
+
+                <div class="divider" style="margin: 10px 0; color: #ccc; font-size: 0.8rem; text-align: center;"><span>ou e-mail</span></div>
+
+                <input type="email" id="emailInput" placeholder="Seu e-mail" style="padding: 14px; border-radius: 12px; border: 1px solid #ddd; width: 100%; box-sizing: border-box;">
+                <input type="password" id="senhaInput" placeholder="Sua senha" style="padding: 14px; border-radius: 12px; border: 1px solid #ddd; width: 100%; box-sizing: border-box;">
+                
+                <button onclick="loginEmail()" style="background: #0B3D91; color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; width: 100%;">
+                    ENTRAR NO APP
+                </button>
+
+                <p style="margin-top: 25px; font-size: 0.9rem; color: #666;">Ainda não tem conta? <span style="color: #00A859; font-weight: 700; cursor: pointer;" onclick="toggleTelas('cadastro')">Cadastre-se aqui</span></p>
+            </div>
+        </div>
+    </section>
+
+    <section id="registerScreen" style="display: none; width: 100%; height: 100vh; justify-content: center; align-items: center; background: #f4f7f6; position: fixed; top:0; left:0; z-index:999;">
+        <div class="login-container" style="width: 90%; max-width: 380px; text-align: center; background: white; padding: 40px 30px; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);">
+            <h2 style="color:#00A859; font-weight:800; margin-bottom: 20px;">Criar Conta</h2>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <input type="email" id="regEmail" placeholder="Escolha um e-mail" style="padding: 14px; border-radius: 12px; border: 1px solid #ddd; width: 100%; box-sizing: border-box;">
+                <input type="password" id="regSenha" placeholder="Crie uma senha (mín. 6 dígitos)" style="padding: 14px; border-radius: 12px; border: 1px solid #ddd; width: 100%; box-sizing: border-box;">
+                
+                <button onclick="cadastrarUsuario()" style="background: #00A859; color: white; border: none; padding: 16px; border-radius: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; width: 100%;">
+                    FINALIZAR CADASTRO
+                </button>
+
+                <p style="margin-top: 20px; font-size: 0.9rem; color: #666; cursor: pointer;" onclick="toggleTelas('login')">Já tem conta? <span style="color: #0B3D91; font-weight: 700;">Faça Login</span></p>
+            </div>
+        </div>
+    </section>
+
+    <div id="appContainer" style="display: none;">
+        <header style="background: #0B3D91; padding: 15px; color: white; display: flex; justify-content: space-between; align-items: center;">
+            <h2>Reclame <span style="color:#FFB703;">Itz</span></h2>
+            <div onclick="sair()" style="cursor:pointer; font-weight: 600;">Sair</div>
+        </header>
+
+        <main style="padding: 20px;">
+            <h2 id="txtBoasVindas" style="color:#0B3D91;">Feed da Cidade</h2>
+            <span style="color:#00A859; font-weight:700;">Imperatriz - MA</span>
+            <div id="feed" style="margin-top: 20px; text-align: center; color: #bbb; padding-top: 50px;">
+                Tudo pronto para suas reclamações!
+            </div>
+        </main>
+
+        <button onclick="document.getElementById('modalPost').style.display='flex'" style="position: fixed; bottom: 30px; right: 20px; width: 60px; height: 60px; background: #00A859; color: white; border-radius: 50%; border: none; font-size: 30px; box-shadow: 0 5px 15px rgba(0,168,89,0.4); z-index: 1000;">+</button>
+
+        <div id="modalPost" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:2000; align-items:flex-end;">
+            <div style="background:white; width:100%; border-radius:20px 20px 0 0; padding:25px; box-sizing: border-box;">
+                <h3 style="margin-bottom:15px; color:#0B3D91;">Novo Relato</h3>
+                <input type="text" placeholder="Título do problema" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd; box-sizing: border-box;">
+                <select style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:1px solid #ddd;">
+                    <option>Saneamento</option>
+                    <option>Saúde</option>
+                    <option>Infraestrutura</option>
+                    <option>Iluminação</option>
+                </select>
+                <button onclick="document.getElementById('modalPost').style.display='none'" style="width:100%; background:#00A859; color:white; padding:15px; border-radius:12px; border:none; font-weight:700;">PUBLICAR</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signInWithRedirect, getRedirectResult, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDOVY9fNz1ypYMa9DliAxIbZs6sQG2VKCk",
+            authDomain: "reclame-itz.firebaseapp.com",
+            projectId: "reclame-itz",
+            storageBucket: "reclame-itz.firebasestorage.app",
+            messagingSenderId: "146616793803",
+            appId: "1:146616793803:web:8a2863859b172af293794e"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
+
+        setPersistence(auth, browserLocalPersistence);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('registerScreen').style.display = 'none';
+                document.getElementById('appContainer').style.display = 'block';
+                document.getElementById('txtBoasVindas').innerText = "Olá, " + (user.displayName || user.email.split('@')[0]);
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('appContainer').style.display = 'none';
+            }
+        });
+
+        // Função para alternar as telas de Login e Cadastro
+        window.toggleTelas = (tela) => {
+            if(tela === 'cadastro') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('registerScreen').style.display = 'flex';
+            } else {
+                document.getElementById('loginScreen').style.display = 'flex';
+                document.getElementById('registerScreen').style.display = 'none';
+            }
+        }
+
+        window.loginGoogle = () => signInWithRedirect(auth, provider);
+
+        window.loginEmail = () => {
+            const e = document.getElementById('emailInput').value;
+            const s = document.getElementById('senhaInput').value;
+            signInWithEmailAndPassword(auth, e, s).catch(err => alert("Erro: " + err.message));
+        };
+
+        window.cadastrarUsuario = () => {
+            const e = document.getElementById('regEmail').value;
+            const s = document.getElementById('regSenha').value;
+            if(s.length < 6) return alert("A senha deve ter no mínimo 6 dígitos!");
+            
+            createUserWithEmailAndPassword(auth, e, s)
+                .then(() => alert("Conta criada com sucesso!"))
+                .catch(err => alert("Erro no cadastro: " + err.message));
+        };
+
+        window.sair = () => signOut(auth).then(() => location.reload());
+    </script>
+</body>
+</html>
